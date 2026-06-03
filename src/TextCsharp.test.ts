@@ -195,24 +195,20 @@ describe("TextCsharp — extract", () => {
 });
 
 describe("TextCsharp — framework integration", () => {
-    it("renders extracted hierarchy via format()", () => {
+    it("renders extracted hierarchy via format()", async () => {
         const h = new TextCsharp(metadata);
-        const out = h.symbolsRaw("public class C { public void Answer() {} }");
+        const out = await h.symbolsRaw("public class C { public void Answer() {} }");
         assert.ok(out.includes("class C"));
         assert.ok(out.includes("method Answer"));
     });
 
-    it("inherits jsonpath query against the symbol outline", async () => {
+    it("jsonpath dispatches against the deep-json ANTLR parse tree (issue #10)", async () => {
+        // Every ANTLR deep tree has a root with a `type` field — verify
+        // jsonpath reaches it via the deep-channel dispatch.
         const h = new TextCsharp(metadata);
-        const src = [
-            "public class Parser {",
-            "    public void Parse() {}",
-            "}",
-            "public class TopLevel {}",
-        ].join("\n");
-        const top = await h.query(src, "jsonpath", "$.TopLevel");
-        assert.equal(top.length, 1);
-        assert.equal(typeof top[0].matched, "number");
+        const roots = await h.query("class Probe {}", "jsonpath", "$.type");
+        assert.equal(roots.length, 1);
+        assert.equal(typeof roots[0].matched, "string");
     });
 });
 
