@@ -1,6 +1,6 @@
 {
     "name": "@plurnk/plurnk-mimetypes-text-csharp",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "text/x-csharp mimetype handler for plurnk-service. ANTLR-backed extraction via grammars-v4.",
     "type": "module",
     "license": "MIT",
@@ -15,7 +15,7 @@
         "handlers": [
             {
                 "name": "text/x-csharp",
-                "glyph": "#\ufe0f\u20e3",
+                "glyph": "#️⃣",
                 "extensions": [
                     ".cs"
                 ]
@@ -44,12 +44,15 @@
         "prepare": "npm run build"
     },
     "dependencies": {
-        "@plurnk/plurnk-mimetypes": "0.10.0",
         "antlr4ng": "^3.0.0"
     },
     "devDependencies": {
         "@types/node": "^25.8.0",
         "antlr-ng": "^1.0.10",
-        "typescript": "^6.0.3"
+        "typescript": "^6.0.3",
+        "@plurnk/plurnk-mimetypes": "^0.14.1"
+    },
+    "peerDependencies": {
+        "@plurnk/plurnk-mimetypes": "^0.14.1"
     }
 }
