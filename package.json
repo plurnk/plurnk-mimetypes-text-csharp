@@ -1,6 +1,6 @@
 {
     "name": "@plurnk/plurnk-mimetypes-text-csharp",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "description": "text/x-csharp mimetype handler for plurnk-service. ANTLR-backed extraction via grammars-v4.",
     "type": "module",
     "license": "MIT",
