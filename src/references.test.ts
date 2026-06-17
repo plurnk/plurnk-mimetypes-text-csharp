@@ -1,5 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
+import { assertHandlerConformance } from "@plurnk/plurnk-mimetypes/conformance";
 import TextCsharp from "./TextCsharp.ts";
 import type { MimeRef } from "@plurnk/plurnk-mimetypes";
 
@@ -192,6 +193,31 @@ describe("TextCsharp references — joins to local defs", () => {
         assert.ok(helperDef);
         assert.ok(helperInst);
         assert.equal(helperInst.name, helperDef.name);
+    });
+});
+
+describe("TextCsharp references — SPEC §16 conformance harness", () => {
+    it("certifies against the public assertHandlerConformance harness", async () => {
+        await assertHandlerConformance(h, {
+            source: SRC,
+            // Substrings present only inside string literals / comments.
+            decoyNames: ["StringDecoy", "CommentDecoy", "BlockDecoy", "Foo", "Baz", "Zap"],
+            expectJoins: [
+                // inherit Base → class App.Core.Base, edge sourced from Worker.
+                { refName: "Base", container: "App.Core.Worker" },
+                // new Helper() inside Run → class Helper, edge sourced from Worker.Run.
+                { refName: "Helper", container: "App.Core.Worker.Run" },
+                // call DoWork() → method Helper.DoWork, edge sourced from Worker.Run.
+                { refName: "DoWork", container: "App.Core.Worker.Run" },
+            ],
+            expectRefs: [
+                { name: "Base", kind: "inherit" },
+                { name: "IRunnable", kind: "inherit" },
+                { name: "Helper", kind: "instantiate" },
+                { name: "DoWork", kind: "call" },
+                { name: "Config", kind: "type" },
+            ],
+        });
     });
 });
 
