@@ -1,6 +1,6 @@
 {
     "name": "@plurnk/plurnk-mimetypes-text-csharp",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "description": "text/x-csharp mimetype handler for plurnk-service. ANTLR-backed extraction via grammars-v4.",
     "type": "module",
     "license": "MIT",
@@ -55,6 +55,6 @@
         "typescript": "^6.0.3"
     },
     "peerDependencies": {
-        "@plurnk/plurnk-mimetypes": "^0.16.0 || ^0.17.0"
+        "@plurnk/plurnk-mimetypes": "^0.16.0 || ^0.17.0 || ^0.18.0"
     }
 }
